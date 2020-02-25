@@ -23,7 +23,6 @@ APP_NAME="teamspeak"
 docker build --tag "$APP_NAME" .
 
 if confirm_action "Test image?"; then
-
 	# Set up temporary directory
 	TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
 	add_cleanup "rm -rf $TMP_DIR"
