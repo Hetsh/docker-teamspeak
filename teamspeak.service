@@ -1,0 +1,21 @@
+[Unit]
+Description=Teamspeak Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStartPre=-/bin/docker create \
+              --rm \
+              --interactive \
+              --name teamspeak \
+              --publish 9987:9987/udp \
+              --publish 10011:10011/tcp \
+              --publish 30033:30033/tcp \
+              --mount type=bind,source=/etc/teamspeak-server/app.ini,target=/etc/teamspeak-server/app.ini \
+              --mount type=bind,source=/etc/teamspeak-server/data,target=/teamspeak-server-data \
+              hetsh/teamspeak
+ExecStart=/bin/docker start --attach teamspeak
+ExecStop=/bin/docker stop teamspeak
+
+[Install]
+WantedBy=multi-user.target

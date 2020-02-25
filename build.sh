@@ -19,28 +19,37 @@ if ! docker version &> /dev/null; then
 fi
 
 # Build the image
-APP_NAME="tvheadend"
+APP_NAME="teamspeak"
 docker build --tag "$APP_NAME" .
 
 if confirm_action "Test image?"; then
+
 	# Set up temporary directory
-	TMP_CONF_DIR=$(mktemp -d "/tmp/$APP_NAME-CONF-XXXXXXXXXX")
-	add_cleanup "rm -rf $TMP_CONF_DIR"
-	TMP_REC_DIR=$(mktemp -d "/tmp/$APP_NAME-REC-XXXXXXXXXX")
-	add_cleanup "rm -rf $TMP_REC_DIR"
+	TMP_DIR=$(mktemp -d "/tmp/$APP_NAME-XXXXXXXXXX")
+	add_cleanup "rm -rf $TMP_DIR"
+
+	# Configuration from ReadMe
+	echo "license_accepted=1
+dbsqlpath=/opt/teamspeak-server/sql/
+logpath=/var/log/teamspeak-server
+serverquerydocs_path=/opt/teamspeak-server/serverquerydocs" > "$TMP_DIR/app.ini"
 
 	# Apply permissions, UID matches process user
-	APP_UID=1359
-	chown -R "$APP_UID":"$APP_UID" "$TMP_CONF_DIR" "$TMP_REC_DIR"
+	extract_var APP_UID "./Dockerfile" "\K\d+"
+	chown -R "$APP_UID":"$APP_UID" "$TMP_DIR"
 
 	# Start the test
+	extract_var CONF_DIR "./Dockerfile" "\"\K[^\"]+"
+	extract_var DATA_DIR "./Dockerfile" "\"\K[^\"]+"
 	docker run \
 	--rm \
 	--interactive \
-	--publish 9981:9981/tcp \
-	--publish 9982:9982/tcp \
-	--mount type=bind,source="$TMP_REC_DIR",target="/home/hts/rec" \
-	--mount type=bind,source="$TMP_CONF_DIR",target="/home/hts/.hts/tvheadend" \
+	--publish 9987:9987/udp \
+	--publish 10011:10011/tcp \
+	--publish 10022:10022/tcp \
+	--publish 30033:30033/tcp \
+	--mount type=bind,source="$TMP_DIR/app.ini",destination="$CONF_DIR/app.ini" \
+	--mount type=bind,source="$TMP_DIR",destination="$DATA_DIR" \
 	--name "$APP_NAME" \
 	"$APP_NAME"
 fi

@@ -19,8 +19,21 @@ assert_dependency "curl"
 # Base image
 update_image "library/alpine" "Alpine" "\d{8}"
 
-# TV-Headend
-update_pkg "tvheadend" "TV-Headend" "true" "https://pkgs.alpinelinux.org/package/edge/community/x86_64" "(\d+\.)+\d+-r\d+"
+# Teamspeak Server
+TS_PKG="APP_VERSION"
+TS_VERSION_REGEX="(\d+\.)+\d+"
+CURRENT_TS_VERSION=$(cat Dockerfile | grep -P -o "$TS_PKG=\K$TS_VERSION_REGEX")
+NEW_TS_VERSION=$(curl -L -s "https://files.teamspeak-services.com/releases/server/" | grep -P -o "$TS_VERSION_REGEX" | sort --version-sort | tail -n 1)
+if [ "$CURRENT_TS_VERSION" != "$NEW_TS_VERSION" ]; then
+	prepare_update "$TS_PKG" "Teamspeak Server" "$CURRENT_TS_VERSION" "$NEW_TS_VERSION"
+	update_version "$NEW_TS_VERSION"
+fi
+
+# Packages
+IMG_ARCH="x86_64"
+BASE_PKG_URL="https://pkgs.alpinelinux.org/package/edge"
+update_pkg "libstdc++" "Std. C++ Libs" "false" "$BASE_PKG_URL/community/$IMG_ARCH" "(\d+\.)+\d+-r\d+"
+update_pkg "ca-certificates" "CA-Certificates" "false" "$BASE_PKG_URL/main/$IMG_ARCH" "\d{8}-r\d+"
 
 if ! updates_available; then
 	echo "No updates available."
