@@ -17,7 +17,7 @@ assert_dependency "jq"
 assert_dependency "curl"
 
 # Base image
-update_image "library/alpine" "Alpine" "\d{8}"
+update_image "library/alpine" "Alpine" "false" "\d{8}"
 
 # Teamspeak Server
 TS_PKG="APP_VERSION"
