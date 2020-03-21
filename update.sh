@@ -32,7 +32,7 @@ fi
 # Packages
 IMG_ARCH="x86_64"
 BASE_PKG_URL="https://pkgs.alpinelinux.org/package/edge"
-update_pkg "libstdc++" "Std. C++ Libs" "false" "$BASE_PKG_URL/community/$IMG_ARCH" "(\d+\.)+\d+-r\d+"
+update_pkg "libstdc++" "Std. C++ Libs" "false" "$BASE_PKG_URL/main/$IMG_ARCH" "(\d+\.)+\d+-r\d+"
 update_pkg "ca-certificates" "CA-Certificates" "false" "$BASE_PKG_URL/main/$IMG_ARCH" "\d{8}-r\d+"
 
 if ! updates_available; then
