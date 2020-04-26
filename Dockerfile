@@ -21,7 +21,7 @@ ARG DATA_DIR="/teamspeak-server-data"
 ARG CONF_DIR="/etc/teamspeak-server"
 ARG LOG_DIR="/var/log/teamspeak-server"
 RUN mkdir "$DATA_DIR" "$CONF_DIR" "$LOG_DIR" && \
-    echo -e "license_accepted=1\ndbsqlpath=$APP_DIR/sql/\nlogpath=$LOG_DIR\nserverquerydocs_path=$APP_DIR/serverquerydocs" > "$CONF_DIR/teamspeak-server.ini" && \
+    echo -e "license_accepted=1\ndbsqlpath=$APP_DIR/sql/\nlogpath=$LOG_DIR\nserverquerydocs_path=$APP_DIR/serverquerydocs" > "$CONF_DIR/app.ini" && \
     chown -R "$APP_USER":"$APP_USER" "$DATA_DIR" "$CONF_DIR" "$LOG_DIR"
 VOLUME ["$DATA_DIR", "$LOG_DIR", "$CONF_DIR"]
 

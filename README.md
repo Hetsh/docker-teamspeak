@@ -1,4 +1,4 @@
-# MCServer
+# Teamspeak
 Super small and simple teamspeak server.
 
 ## Running the server
