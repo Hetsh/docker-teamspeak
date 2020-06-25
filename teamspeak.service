@@ -6,7 +6,6 @@ Requires=docker.service
 [Service]
 ExecStartPre=-/bin/docker create \
               --rm \
-              --interactive \
               --name teamspeak \
               --publish 9987:9987/udp \
               --publish 10011:10011/tcp \
