@@ -42,6 +42,7 @@ serverquerydocs_path=/opt/teamspeak-server/serverquerydocs" > "$TMP_DIR/app.ini"
 	extract_var DATA_DIR "./Dockerfile" "\"\K[^\"]+"
 	docker run \
 	--rm \
+	--tty \
 	--interactive \
 	--publish 9987:9987/udp \
 	--publish 10011:10011/tcp \
