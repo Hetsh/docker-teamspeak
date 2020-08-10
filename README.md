@@ -40,12 +40,12 @@ docker run --mount type=bind,source=/path/to/data,target=/teamspeak-server-data 
 ```
 
 ## Automate startup and shutdown via systemd
+The systemd unit can be found in my GitHub [repository](https://github.com/Hetsh/docker-teamspeak).
 ```bash
 systemctl enable teamspeak --now
 ```
-The systemd unit can be found in my [GitHub](https://github.com/Hetsh/docker-teamspeak) repository.
-By default, the systemd service assumes `/etc/teamspeak-server/app.ini` for configuration and `/etc/teamspeak-server/data` for data.
-You need to adjust these to suit your setup.
+By default, the systemd service assumes `/apps/teamspeak/app.ini` for configuration and `/apps/teamspeak/data` for data and `/etc/localtime` for timezone.
+Since this is a personal systemd unit file, you might need to adjust some parameters to suit your setup.
 
 ## Fork Me!
 This is an open project (visit [GitHub](https://github.com/Hetsh/docker-teamspeak)). Please feel free to ask questions, file an issue or contribute to it.
