@@ -23,7 +23,7 @@ update_image "library/alpine" "Alpine Linux" "false" "\d{8}"
 TS_PKG="APP_VERSION"
 TS_VERSION_REGEX="(\d+\.)+\d+"
 CURRENT_TS_VERSION=$(cat Dockerfile | grep -P -o "$TS_PKG=\K$TS_VERSION_REGEX")
-NEW_TS_VERSION=$(curl -L -s "https://files.teamspeak-services.com/releases/server/" | grep -P -o "$TS_VERSION_REGEX" | sort --version-sort | tail -n 1)
+NEW_TS_VERSION=$(curl --silent --location "https://files.teamspeak-services.com/releases/server/" | grep -P -o "$TS_VERSION_REGEX" | sort --version-sort | tail -n 1)
 if [ "$CURRENT_TS_VERSION" != "$NEW_TS_VERSION" ]; then
 	prepare_update "$TS_PKG" "Teamspeak Server" "$CURRENT_TS_VERSION" "$NEW_TS_VERSION"
 	update_version "$NEW_TS_VERSION"
