@@ -36,7 +36,7 @@ update_pkg "libstdc++" "Std. C++ Libs" "false" "$BASE_PKG_URL/main/$IMG_ARCH" "(
 update_pkg "ca-certificates" "CA-Certificates" "false" "$BASE_PKG_URL/main/$IMG_ARCH" "\d{8}-r\d+"
 
 if ! updates_available; then
-	echo "No updates available."
+	#echo "No updates available."
 	exit 0
 fi
 
