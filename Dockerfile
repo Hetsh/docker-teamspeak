@@ -1,7 +1,7 @@
 FROM library/alpine:20200917
 RUN apk add --no-cache \
     libstdc++=10.2.0-r5 \
-    ca-certificates=20191127-r4
+    ca-certificates=20191127-r5
 
 # Unprivileged user
 ARG APP_USER="ts"
