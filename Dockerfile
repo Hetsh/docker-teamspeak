@@ -15,6 +15,7 @@ ARG APP_ARCHIVE="teamspeak3-server_linux_alpine-$APP_VERSION.tar.bz2"
 ADD "https://files.teamspeak-services.com/releases/server/$APP_VERSION/$APP_ARCHIVE" "$APP_DIR/$APP_ARCHIVE"
 RUN tar --extract --strip-components=1 --directory "$APP_DIR" --file "$APP_DIR/$APP_ARCHIVE" && \
     rm "$APP_DIR/$APP_ARCHIVE"
+ENV PATH="$PATH:$APP_DIR"
 
 # Volumes & Configuration
 ARG DATA_DIR="/teamspeak-server-data"
@@ -30,4 +31,5 @@ EXPOSE 9987/udp 10011/tcp 10022/tcp 30033/tcp
 
 USER "$APP_USER"
 WORKDIR "$DATA_DIR"
-ENTRYPOINT "/opt/teamspeak-server/ts3server" inifile="/etc/teamspeak-server/app.ini"
+ENV CONF_DIR="$CONF_DIR"
+ENTRYPOINT exec ts3server inifile="$CONF_DIR/app.ini"
