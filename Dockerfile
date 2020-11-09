@@ -9,7 +9,7 @@ ARG APP_UID=1361
 RUN adduser --disabled-password --uid "$APP_UID" --no-create-home --gecos "$APP_USER" --shell /sbin/nologin "$APP_USER"
 
 # Teamspeak Server
-ARG APP_VERSION=3.12.1
+ARG APP_VERSION=3.13.0
 ARG APP_DIR="/opt/teamspeak-server"
 ARG APP_ARCHIVE="teamspeak3-server_linux_alpine-$APP_VERSION.tar.bz2"
 ADD "https://files.teamspeak-services.com/releases/server/$APP_VERSION/$APP_ARCHIVE" "$APP_DIR/$APP_ARCHIVE"
