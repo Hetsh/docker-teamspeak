@@ -1,4 +1,4 @@
-FROM library/alpine:20200917
+FROM library/alpine:20201218
 RUN apk add --no-cache \
     libstdc++=10.2.1_pre1-r1 \
     ca-certificates=20191127-r5
