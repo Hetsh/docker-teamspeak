@@ -3,7 +3,7 @@ Super small and simple teamspeak server.
 
 ## Running the server
 ```bash
-docker run --detach --name teamspeak --publish 9987:9987/udp --publish 10011:10011/tcp --publish 30033:30033/tcp hetsh/teamspeak
+docker run --detach --name teamspeak --publish 9987:9987/udp --publish 30033:30033/tcp hetsh/teamspeak
 ```
 
 ## Stopping the container

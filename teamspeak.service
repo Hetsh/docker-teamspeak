@@ -8,7 +8,6 @@ ExecStartPre=-/bin/docker create \
               --rm \
               --name teamspeak \
               --publish 9987:9987/udp \
-              --publish 10011:10011/tcp \
               --publish 30033:30033/tcp \
               --mount type=bind,source=/apps/teamspeak/app.ini,target=/etc/teamspeak-server/app.ini \
               --mount type=bind,source=/apps/teamspeak/data,target=/teamspeak-server-data \
