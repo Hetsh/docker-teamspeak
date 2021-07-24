@@ -12,9 +12,10 @@ RUN adduser --disabled-password --uid "$APP_UID" --no-create-home --gecos "$APP_
 ARG APP_VERSION=3.13.6
 ARG APP_DIR="/opt/teamspeak-server"
 ARG APP_ARCHIVE="teamspeak3-server_linux_alpine-$APP_VERSION.tar.bz2"
-ADD "https://files.teamspeak-services.com/releases/server/$APP_VERSION/$APP_ARCHIVE" "$APP_DIR/$APP_ARCHIVE"
-RUN tar --extract --strip-components=1 --directory "$APP_DIR" --file "$APP_DIR/$APP_ARCHIVE" && \
-    rm "$APP_DIR/$APP_ARCHIVE"
+RUN wget --quiet "https://files.teamspeak-services.com/releases/server/$APP_VERSION/$APP_ARCHIVE" && \
+    mkdir "$APP_DIR" && \
+    tar --extract --strip-components=1 --directory "$APP_DIR" --file "$APP_ARCHIVE" && \
+    rm "$APP_ARCHIVE"
 ENV PATH="$PATH:$APP_DIR"
 
 # Volumes & Configuration
