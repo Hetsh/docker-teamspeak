@@ -19,31 +19,39 @@ if ! docker version &> /dev/null; then
 	exit -1
 fi
 
-# Build the image
-APP_NAME="teamspeak"
-IMG_NAME="hetsh/$APP_NAME"
-docker build --tag "$IMG_NAME:latest" --tag "$IMG_NAME:$_NEXT_VERSION" .
-
+IMG_NAME="hetsh/teamspeak"
 case "${1-}" in
-	# Test with default configuration
+	# Build and test with default configuration
 	"--test")
+		docker build \
+			--tag "$IMG_NAME:test" \
+			.
 		docker run \
-		--rm \
-		--tty \
-		--interactive \
-		--publish 9987:9987/udp \
-		--publish 10011:10011/tcp \
-		--publish 10022:10022/tcp \
-		--publish 30033:30033/tcp \
-		--mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
-		--name "$APP_NAME" \
-		"$IMG_NAME"
+			--rm \
+			--tty \
+			--interactive \
+			--publish 9987:9987/udp \
+			--publish 10011:10011/tcp \
+			--publish 10022:10022/tcp \
+			--publish 30033:30033/tcp \
+			--mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+			"$IMG_NAME:test"
 	;;
-	# Push image to docker hub
+	# Build if it does not exist and push image to docker hub
 	"--upload")
 		if ! tag_exists "$IMG_NAME"; then
+			docker build \
+				--tag "$IMG_NAME:latest" \
+				--tag "$IMG_NAME:$_NEXT_VERSION" \
+				.
 			docker push "$IMG_NAME:latest"
 			docker push "$IMG_NAME:$_NEXT_VERSION"
 		fi
+	;;
+	# Build image without additonal steps
+	*)
+		docker build \
+			--tag "$IMG_NAME:latest" \
+			.
 	;;
 esac
