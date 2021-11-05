@@ -11,21 +11,6 @@ docker run --detach --name teamspeak --publish 9987:9987/udp --publish 30033:300
 docker stop teamspeak
 ```
 
-## Configuration
-Teamspeak is configured via a config file `/etc/teamspeak-server/app.ini`.
-The default configuration should be sufficient for simple setups.
-To apply your custom config use this additional mount flag:
-```bash
-docker run --mount type=bind,source=/path/to/app.ini,target=/etc/teamspeak-server/app.ini ...
-```
-Just make sure your configuration contains the following options:
-```ini
-dbsqlpath=/opt/teamspeak-server/sql/
-logpath=/var/log/teamspeak-server
-serverquerydocs_path=/opt/teamspeak-server/serverquerydocs
-```
-You can also add `license_accepted=1` if you agree to their terms and conditions.
-
 ## Creating persistent storage
 ```bash
 DATA="/path/to/data"
