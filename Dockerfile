@@ -1,6 +1,6 @@
 FROM amd64/alpine:20210804
 RUN apk add --no-cache \
-        libstdc++=11.2.1_git20211125-r0 \
+        libstdc++=11.2.1_git20211125-r1 \
         ca-certificates=20191127-r7
 
 # Unprivileged user
