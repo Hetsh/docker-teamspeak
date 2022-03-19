@@ -1,4 +1,4 @@
-FROM amd64/alpine:20210804
+FROM amd64/alpine:20220316
 RUN apk add --no-cache \
         libstdc++=11.2.1_git20220219-r1 \
         ca-certificates=20211220-r0
